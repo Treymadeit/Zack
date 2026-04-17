@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clips — Zack</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Clips page enhancements */
+    .clips-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .clips-header-left {}
+    .clips-header-right {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Shimmer clip placeholders */
+    .clip-card-shimmer {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .clip-card-shimmer-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 25%,
+        rgba(255,255,255,0.08) 50%,
+        rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.5s infinite;
+    }
+    .clip-card-shimmer-body {
+      padding: 18px 20px;
+    }
+    .clip-card-shimmer-line {
+      height: 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg,
+        rgba(255,255,255,0.04) 25%,
+        rgba(255,255,255,0.08) 50%,
+        rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmerAnim 1.5s infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <!-- Page loader -->
+  <div id="page-loader">
+    <div class="spinner"></div>
+    <span style="font-family:var(--font-brand);font-size:0.62rem;letter-spacing:.2em;color:var(--text-2);text-transform:uppercase;">Loading Clips</span>
+  </div>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-logo">
+        <img src="images/logo.png" alt="Zack" />
+        <span>Zack</span>
+      </a>
+      <div class="navbar-right">
+        <span class="navbar-email" id="user-email"></span>
+        <a href="dashboard.html" class="btn btn-ghost btn-sm">← Dashboard</a>
+        <button id="logout-btn" class="btn btn-ghost btn-sm">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ MAIN ════════════════════ -->
+  <main class="page-content">
+    <div class="container">
+
+      <!-- Page hero -->
+      <div class="page-hero">
+        <p class="page-hero-label">Rendered Output</p>
+        <h1 class="page-hero-title">Your Clips</h1>
+        <p class="page-hero-sub">Your top-ranked moments, fully rendered and ready to download. Click any clip to open it.</p>
+      </div>
+
+      <!-- ── Header row ─────────────────────────────────────── -->
+      <div class="clips-header-row">
+        <div class="clips-header-left">
+          <h2 class="section-row-title">Rendered Clips
+            <span id="clips-count" style="font-family:var(--font-body);font-size:0.78rem;font-weight:400;color:var(--text-2);margin-left:10px"></span>
+          </h2>
+        </div>
+        <div class="clips-header-right">
+          <a id="job-link" href="#" class="btn btn-ghost btn-sm">← View Job</a>
+          <button onclick="window.location.reload()" class="btn btn-ghost btn-sm">↻ Refresh</button>
+        </div>
+      </div>
+
+      <!-- ── Gallery ────────────────────────────────────────── -->
+      <div class="clips-grid" id="clips-gallery" style="padding-bottom:60px">
+        <!-- Shimmer placeholders -->
+        <div class="clip-card-shimmer">
+          <div class="clip-card-shimmer-thumb"></div>
+          <div class="clip-card-shimmer-body">
+            <div class="clip-card-shimmer-line" style="width:40%"></div>
+            <div class="clip-card-shimmer-line" style="width:70%"></div>
+            <div class="clip-card-shimmer-line" style="width:100%;height:36px;border-radius:10px"></div>
+          </div>
+        </div>
+        <div class="clip-card-shimmer">
+          <div class="clip-card-shimmer-thumb"></div>
+          <div class="clip-card-shimmer-body">
+            <div class="clip-card-shimmer-line" style="width:40%"></div>
+            <div class="clip-card-shimmer-line" style="width:70%"></div>
+            <div class="clip-card-shimmer-line" style="width:100%;height:36px;border-radius:10px"></div>
+          </div>
+        </div>
+        <div class="clip-card-shimmer">
+          <div class="clip-card-shimmer-thumb"></div>
+          <div class="clip-card-shimmer-body">
+            <div class="clip-card-shimmer-line" style="width:40%"></div>
+            <div class="clip-card-shimmer-line" style="width:70%"></div>
+            <div class="clip-card-shimmer-line" style="width:100%;height:36px;border-radius:10px"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/clips.js"></script>
+
+</body>
+</html>

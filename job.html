@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job — Zack</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Info panel top-line ──────────────────────────────── */
+    .job-summary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-xl);
+      padding: 32px 36px;
+      margin-bottom: 36px;
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+    }
+    .job-summary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .job-summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .job-summary-title {
+      font-family: var(--font-brand);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-0);
+    }
+    .job-summary-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 600px) {
+      .job-summary { padding: 22px 18px; }
+      .job-summary-actions .btn { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <!-- Page loader -->
+  <div id="page-loader">
+    <div class="spinner"></div>
+    <span style="font-family:var(--font-brand);font-size:0.62rem;letter-spacing:.2em;color:var(--text-2);text-transform:uppercase;">Loading Job</span>
+  </div>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-logo">
+        <img src="images/logo.png" alt="Zack" />
+        <span>Zack</span>
+      </a>
+      <div class="navbar-right">
+        <span class="navbar-email" id="user-email"></span>
+        <a href="dashboard.html" class="btn btn-ghost btn-sm">← Dashboard</a>
+        <button id="logout-btn" class="btn btn-ghost btn-sm">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ MAIN ════════════════════ -->
+  <main class="page-content">
+    <div class="container" id="job-content">
+
+      <!-- Page hero -->
+      <div class="page-hero">
+        <p class="page-hero-label">Job Analysis</p>
+        <h1 class="page-hero-title">Clip Candidates</h1>
+        <p class="page-hero-sub">Zack has analyzed your video and ranked the strongest moments below — from highest virality potential to lowest.</p>
+      </div>
+
+      <!-- ── Job Summary Panel ──────────────────────────────── -->
+      <div class="job-summary">
+        <div class="job-summary-header">
+          <span class="job-summary-title">Job Details</span>
+          <div class="job-summary-actions">
+            <a id="clips-btn" href="#" class="btn btn-primary btn-sm">
+              View Rendered Clips →
+            </a>
+          </div>
+        </div>
+
+        <!-- Detail grid -->
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-key">Status</div>
+            <div class="detail-val" id="job-status">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-key">Submitted</div>
+            <div class="detail-val" id="job-created">—</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-key">Job ID</div>
+            <div class="detail-val" id="job-id" style="font-family:var(--font-brand);font-size:0.72rem;letter-spacing:.04em">—</div>
+          </div>
+          <div class="detail-item" style="grid-column: 1 / -1">
+            <div class="detail-key">Source URL</div>
+            <div class="detail-val" id="job-url">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Candidates ─────────────────────────────────────── -->
+      <div class="section-row">
+        <h2 class="section-row-title">Ranked Moments</h2>
+        <span style="font-size:0.78rem;color:var(--text-2)" id="candidates-count"></span>
+      </div>
+
+      <div class="candidates-grid" id="candidates-list" style="padding-bottom:60px">
+        <!-- Shimmer placeholders while loading -->
+        <div class="candidate-card shimmer" style="height:200px"></div>
+        <div class="candidate-card shimmer" style="height:200px"></div>
+        <div class="candidate-card shimmer" style="height:200px"></div>
+        <div class="candidate-card shimmer" style="height:200px"></div>
+        <div class="candidate-card shimmer" style="height:200px"></div>
+        <div class="candidate-card shimmer" style="height:200px"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/job.js"></script>
+
+</body>
+</html>

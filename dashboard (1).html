@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Zack</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── URL Submit Card ──────────────────────────────────── */
+    .submit-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-xl);
+      padding: 40px 36px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card), 0 0 80px rgba(0,212,255,0.03);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .submit-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .submit-card-title {
+      font-family: var(--font-brand);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-0);
+      margin-bottom: 6px;
+    }
+    .submit-card-sub {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin-bottom: 24px;
+    }
+    .submit-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .submit-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    .submit-row .btn {
+      flex-shrink: 0;
+      padding: 13px 28px;
+      margin-top: 0;
+    }
+    @media (max-width: 600px) {
+      .submit-row { flex-direction: column; }
+      .submit-row .btn { width: 100%; }
+      .submit-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <!-- Page loader -->
+  <div id="page-loader">
+    <div class="spinner"></div>
+    <span style="font-family:var(--font-brand);font-size:0.62rem;letter-spacing:.2em;color:var(--text-2);text-transform:uppercase;">Loading Workspace</span>
+  </div>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-logo">
+        <img src="images/logo.png" alt="Zack" />
+        <span>Zack</span>
+      </a>
+      <div class="navbar-right">
+        <span class="navbar-email" id="user-email"></span>
+        <button id="logout-btn" class="btn btn-ghost btn-sm">Sign Out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ MAIN ════════════════════ -->
+  <main class="page-content">
+    <div class="container">
+
+      <!-- Page hero -->
+      <div class="page-hero">
+        <p class="page-hero-label">Creator Workspace</p>
+        <h1 class="page-hero-title">Welcome back.<br>Let's find your next viral clips.</h1>
+        <p class="page-hero-sub">Submit a video URL below and Zack will analyze it, rank the strongest moments, and queue your clips for rendering.</p>
+      </div>
+
+      <!-- ── Stats ──────────────────────────────────────────── -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" id="stat-total">—</div>
+          <div class="stat-label">Total Jobs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-queued">—</div>
+          <div class="stat-label">Queued</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-processing">—</div>
+          <div class="stat-label">Processing</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" id="stat-done">—</div>
+          <div class="stat-label">Done</div>
+        </div>
+      </div>
+
+      <!-- ── Submit a new video ─────────────────────────────── -->
+      <div class="submit-card">
+        <h2 class="submit-card-title">Submit a Video</h2>
+        <p class="submit-card-sub">Paste any video URL — YouTube, Loom, Vimeo, direct MP4, or stream link.</p>
+        <form id="submit-form">
+          <div class="submit-row">
+            <div class="form-group">
+              <div class="input-wrapper">
+                <span class="input-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                  </svg>
+                </span>
+                <input
+                  type="url"
+                  id="video-url"
+                  class="form-input"
+                  placeholder="https://youtube.com/watch?v=…"
+                  autocomplete="off"
+                  spellcheck="false"
+                />
+              </div>
+              <p class="form-hint">Zack will queue the job immediately and start working on it.</p>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Jobs list ──────────────────────────────────────── -->
+      <div class="section-row">
+        <h2 class="section-row-title">Recent Jobs</h2>
+        <button onclick="window.location.reload()" class="btn btn-ghost btn-sm">↻ Refresh</button>
+      </div>
+
+      <div id="jobs-list" style="display:flex;flex-direction:column;gap:12px;padding-bottom:60px">
+        <!-- Populated by dashboard.js -->
+        <div style="text-align:center;padding:48px 0"><div class="spinner"></div></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+
+</body>
+</html>
